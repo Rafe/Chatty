@@ -1,17 +1,17 @@
 (function() {
-  var app, configure, express, socketio;
+  var app, chatty, configure, express;
 
   express = require("express");
 
   configure = require("./configure");
 
+  chatty = require("./chatty");
+
   app = express.createServer();
 
   configure(app);
 
-  socketio = require("./socket");
-
-  socketio.start(app);
+  chatty(app);
 
   app.get('/', function(req, res) {
     return res.render('index');

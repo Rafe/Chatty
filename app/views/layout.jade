@@ -5,22 +5,9 @@ html
 
     script(src="/socket.io/socket.io.js")
     script(src="http://code.jquery.com/jquery.min.js")
-    script(src="/javascripts/test.js")
-
-    :coffeescript
-      $ ->
-        socket = io.connect "http://localhost:3000"
-
-        socket.on "message",(data)->
-          $("#container").append "<p>#{data.message}</p>"
-
-        send = (message)-> 
-          socket.emit "message", { "message": message }
-          $("#container").append "<p>#{message}</p>"
-
-        $("#chatbox").submit ()->
-          m = $("#message").val()
-          send(m)
-          false
-
+    script(src="/javascripts/chatty.js")
+    script 
+      $(function(){
+        Chatty("#inputbox","#chatbox","#message","#users");
+      });
   #container!= body
