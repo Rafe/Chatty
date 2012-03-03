@@ -1,13 +1,20 @@
 doctype5
 html
   head
-    title Chatty - chat room example
-
     script(src="/socket.io/socket.io.js")
     script(src="http://code.jquery.com/jquery.min.js")
     script(src="/javascripts/chatty.js")
     script 
       $(function(){
-        Chatty("#inputbox","#chatbox","#message","#users");
+        Chatty.bind("#inputbox","#chatbox","#message","#users");
+
+        $("#login").submit(function(event){
+          event.preventDefault();
+          Chatty.join($("#name").val(),$("#room").val());  
+          $("#login").hide();
+          $("#chatty").show();
+        });
       });
+    title Chatty - chat room example
+
   #container!= body

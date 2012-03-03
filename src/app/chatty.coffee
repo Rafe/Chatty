@@ -2,26 +2,18 @@ module.exports = (app)->
 
   io = require('socket.io').listen app
 
-  messages = ["Hello Josh","Hey, What's up?"]
-  #message:
-  # user_id
-  # user_name 
-  # text
-  # time
+  messages = []
 
-  users = []
-  # user_id 
-  # user_name 
-  # img_url
+  users = {}
 
   io.sockets.on "connection", (socket) ->
 
     socket.on "message", (message) ->
       messages.push(message)
-      socket.broadcast.emit "message", socket.user + " say: " + message
+      socket.broadcast.emit "message", message
 
     socket.on "user:join", (user) ->
-      users.push(user) if user not in users
+      users[user.id] = user if user.id not in users
 
       socket.emit "message:history",
         "messages": messages

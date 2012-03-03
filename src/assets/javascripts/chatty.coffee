@@ -1,48 +1,59 @@
-@Chatty = (inputbox, chatbox, messagebox, usersbox) ->
+class User
+  constructor: (@id,@name)->
+    @icon = "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-snc4/174061_1464651440_5371467_q.jpg"
 
-  socket = io.connect "http://localhost:3000"
-  $form = $(inputbox)
-  $chatbox = $(chatbox)
-  $message = $(messagebox)
-  $users = $(usersbox)
+class Message
+  constructor: (@user_id,@user_name,@text) ->
+    #@time = new Date().getTime()
+    @time = new Date().toString()
 
-  socket.on "message",(message)->
-    set message
+@Chatty =
+  bind : (inputbox, chatbox, messagebox, usersbox) ->
+    @socket = io.connect "http://localhost:3000/"
+    $form = $(inputbox)
+    $chatbox = $(chatbox)
+    $message = $(messagebox)
+    $users = $(usersbox)
 
-  socket.on "user:join",(user)->
-    set "#{user} Joined the room"
-    set_user user
+    @socket.on "message",(message)->
+      #console.log(message)
+      set_message message
 
-  socket.on "user:left",(user)->
-    set "#{user} Left the room"
-
-  socket.on "message:history",(data)->
-    data.messages.forEach (message)->
-      set message
-
-    data.users.forEach (user) ->
-      set "#{user} Joined the room"
+    @socket.on "user:join",(user)->
       set_user user
 
-  $form.submit ()->
-    send $message.val()
-    $message.val("")
-    false
+    @socket.on "user:left",(user)->
+      set "#{user.name} leaving"
 
-  set = (message)->
-    $chatbox.append "<p>#{message}</p>"
+    @socket.on "message:history",(data)->
+      data.messages.forEach (message)->
+        set_message message
 
-  set_user = (user) ->
-    $users.append "<li>#{user}</li>"
+      for id in data.users
+        set_user data.users[id]
 
-  send = (message)->
-    set "I say: " + message
-    socket.emit "message", message
+    $form.submit (event)=>
+      event.preventDefault()
+      message = new Message(@user.id,@user.name,$message.val())
+      $message.val("")
+      set_message message
+      send message
+      false
 
-  join = (user) ->
-    @user = user
-    socket.emit "user:join", user
+    set = (text)->
+      $chatbox.append text
 
-  names = ["Jimmy","Alan","Jeremy","Josh","John","James"]
-  name = names[Math.floor(Math.random()* 6)]
-  join(name)
+    set_message = (message) ->
+      set "<p><strong>#{message.user_name}:</strong> #{message.text} at #{message.time}</p>"
+
+
+    set_user = (user) ->
+      set "#{user.name} Joined the room"
+      $users.append "<li id='user-#{user}'><img src='#{user.icon}' width='40' height='40'>#{user.name}</li>"
+
+    send = (message)->
+      @socket.emit "message", message
+
+  join : (name,room)->
+    @user = new User(Math.floor(Math.random()*100000000 ), name)
+    @socket.emit "user:join", @user

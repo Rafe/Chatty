@@ -6,3 +6,6 @@ compile:
 
 run:
 	node app/index.js
+
+clean:
+	rm app/*.js app/assets/javascripts/*.js
