@@ -1,28 +1,26 @@
-module.exports = (app)->
+messages = []
+users = {}
 
-  io = require('socket.io').listen app
+module.exports.events = events = (socket)->
 
-  messages = []
+  "message": (message)->
+    messages.push(message)
+    user = socket.user || {room:""}
+    socket.broadcast.to(user.room).emit "message", message
 
-  users = {}
+  "user:join":(user,callback)->
+    users[user.id] = user
 
+    socket.user = user
+    socket.join user.room
+
+    callback
+      "messages": messages
+      "users": users
+
+    socket.broadcast.to(socket.user.room).emit "user:join", user
+
+module.exports = (io)->
   io.sockets.on "connection", (socket) ->
-
-    socket.on "message", (message) ->
-      messages.push(message)
-      socket.broadcast.emit "message", message
-
-    socket.on "user:join", (user) ->
-      users[user.id] = user if user.id not in users
-
-      socket.emit "message:history",
-        "messages": messages
-        "users": users
-
-      socket.user = user
-      socket.broadcast.emit "user:join", user
-
-    socket.on "user:left", (user) ->
-      index = users.indexOf(user)
-      users.splice(index,index+1) if index > 0
-      socket.broadcast.emit "user:left",
+    for event,handler of events(socket)
+      socket.on event, handler

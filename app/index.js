@@ -1,5 +1,5 @@
 (function() {
-  var app, chatty, configure, express;
+  var RedisStore, app, chatty, configure, express, io, socketio;
 
   express = require("express");
 
@@ -11,7 +11,15 @@
 
   configure(app);
 
-  chatty(app);
+  socketio = require("socket.io");
+
+  io = socketio.listen(app);
+
+  RedisStore = socketio.RedisStore;
+
+  io.set("store", new RedisStore);
+
+  chatty(io);
 
   app.get('/', function(req, res) {
     return res.render('index');

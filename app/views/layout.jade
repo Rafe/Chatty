@@ -3,18 +3,17 @@ html
   head
     script(src="/socket.io/socket.io.js")
     script(src="http://code.jquery.com/jquery.min.js")
-    script(src="/javascripts/chatty.js")
-    script 
-      $(function(){
-        Chatty.bind("#inputbox","#chatbox","#message","#users");
+    script(src="/javascripts/chatty-client.js")
+    :coffeescript
+      $ ()->
+        Chatty.bind("#inputbox","#chatbox","#message","#users")
 
-        $("#login").submit(function(event){
-          event.preventDefault();
-          Chatty.join($("#name").val(),$("#room").val());  
-          $("#login").hide();
-          $("#chatty").show();
-        });
-      });
+        $("#login").submit (event)->
+          event.preventDefault()
+          Chatty.join($("#name").val(),$("#room").val())
+          $("#login").hide()
+          $("#chatty").show()
+
     title Chatty - chat room example
 
   #container!= body

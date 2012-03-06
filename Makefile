@@ -9,3 +9,8 @@ run:
 
 clean:
 	rm app/*.js app/assets/javascripts/*.js
+
+test:
+	nodeunit test/
+
+.PHONY: test

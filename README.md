@@ -31,7 +31,6 @@ Implement the simple interaction of messaging service
 * socket.io
 * coffee-script 
 * redis 
-* mysql / mongoose
 
 client 
 
