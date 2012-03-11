@@ -1,4 +1,4 @@
-default: compile run
+default: compile spec run
 
 compile:
 	coffee -o lib/ -c src/*.coffee
@@ -11,7 +11,7 @@ run:
 clean:
 	rm lib/*.js example/*.js example/assets/javascripts/*.js
 
-test:
+spec:
 	jasmine-node --coffee specs/
 
 watch:
