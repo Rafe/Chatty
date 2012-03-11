@@ -15,8 +15,14 @@
 
   listen /messages/:room_id
 
-* tests
+* user detect
 
-* basic chat function
-* use bootstrap
+* client restructure
+
 * message structure
+
+* test 
+
+* upload to github and run as package
+
+* move client to chatty-client/example project

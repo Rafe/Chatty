@@ -1,16 +1,20 @@
 default: compile run
 
 compile:
-	coffee -o app/ -c src/app
-	coffee -o app/assets/javascripts/ -c src/assets/javascripts/
+	coffee -o lib/ -c src/*.coffee
+	coffee -o example/ -c src/example
+	coffee -o example/assets/javascripts/ -c src/example/assets/javascripts/
 
 run:
-	node app/index.js
+	node example/index.js
 
 clean:
-	rm app/*.js app/assets/javascripts/*.js
+	rm lib/*.js example/*.js example/assets/javascripts/*.js
 
 test:
-	nodeunit test/
+	jasmine-node --coffee specs/
+
+watch:
+	watchr watch.rb
 
 .PHONY: test
