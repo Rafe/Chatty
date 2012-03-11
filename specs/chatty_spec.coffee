@@ -29,6 +29,9 @@ class FakeStore
   exec:()->
     this
 
+  rpush:()->
+    this
+
 events = require "../lib/events"
 
 users = {}
@@ -55,12 +58,12 @@ describe "chatty",()->
         text: "test message"
 
     it "should save and broadcast message",()->
-      spyOn(@store,"lpush")
+      spyOn(@store,"rpush")
 
       @events["message"](@message)
 
       expect(@socket.stubs["message"]).toEqual @message
-      expect(@store.lpush).toHaveBeenCalled()
+      expect(@store.rpush).toHaveBeenCalled()
 
   describe "join event",()->
     beforeEach ()->

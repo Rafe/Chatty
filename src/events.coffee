@@ -3,8 +3,9 @@ users = {}
 pack = JSON.stringify
 unpack = JSON.parse
 util = require "./util"
+
 Logger = require "./logger"
-logger = new Logger level:4
+logger = new Logger(level:4)
 
 module.exports = events = (socket,store)->
 
@@ -17,7 +18,7 @@ module.exports = events = (socket,store)->
 
     util.sanitize(message)
 
-    store.lpush "room:#{user.room}",pack(message)
+    store.rpush "room:#{user.room}",pack(message)
     socket.broadcast.to(user.room).emit "message", message
 
 
@@ -32,7 +33,7 @@ module.exports = events = (socket,store)->
         user.id = id
         users[user.room][user.id] = user
 
-    queue.lrange "room:#{user.room}",0,-1,(error,messages)->
+    queue.lrange "room:#{user.room}",-20,-1,(error,messages)->
       callback
         "messages": _.map(messages,unpack)
         "users": users[user.room]

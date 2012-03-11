@@ -12,7 +12,10 @@ module.exports = chatty = (io, options)->
   io ?= require "socket.io".listen 80
 
   redis = require "redis"
-  store = redis.createClient(options.port)
+  try
+    store = redis.createClient(options.port)
+  catch e
+    store = new MemoryStore()
 
   io.sockets.on "connection", (socket) ->
     for event,handler of events(socket,store)

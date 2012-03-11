@@ -1,21 +1,19 @@
 doctype5
 html
   head
-    script(src="/socket.io/socket.io.js")
-    script(src="http://code.jquery.com/jquery.min.js")
-    script(src="/javascripts/chatty-client.js")
-    script(src="/javascripts/bootstrap.min.js")
-    link(rel="stylesheet",href="/stylesheets/bootstrap.min.css")
-    link(rel="stylesheet",href="/stylesheets/bootstrap-responsive.min.css")
+    include head
     :coffeescript
       $ ()->
-        Chatty.bind("#inputbox","#chatbox","#message","#users")
+        chatty.bind("#inputbox","#chatbox","#message","#users")
 
         $("#login").submit (event)->
           event.preventDefault()
-          Chatty.join($("#name").val(),$("#room").val())
-          $("#login").hide()
-          $("#chatty").show()
+          login($("#name").val(),$("#room").val())
+
+      login = (name,room)->
+        chatty.join(name,room)
+        $("#login").hide()
+        $("#chatty").show()
 
     title Chatty - chat room example
 

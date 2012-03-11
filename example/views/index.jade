@@ -1,14 +1,17 @@
 .hero-unit
-  form#login
+  form.offset4#login
     h4 Name:
     input#name(type="text")
     h4 Room:
-    input#room(type="text")
-    input(type="submit")
-  #chatty
-    ul#users
-    form#inputbox
-      input#message(type="text")
-      input(type="submit")
-    #chatbox
+    input#room(type="text") 
+    br
+    input.btn(type="submit")
 
+  #chatty(style="display:none")
+    #users.row
+    hr
+    .row
+      form#inputbox
+        input.input-xlarge#message(type="text",placeholder="Message")
+        input.btn.btn-success.btn-inline(type="submit") Say
+      #chatbox
