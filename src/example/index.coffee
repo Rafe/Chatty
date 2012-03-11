@@ -17,7 +17,7 @@ io = socketio.listen app
 RedisStore = socketio.RedisStore
 io.set("store", new RedisStore)
 
-chatty io, 6379
+chatty io
 
 app.get '/', (req,res) ->
   res.render 'index'
