@@ -4,6 +4,9 @@ html
     script(src="/socket.io/socket.io.js")
     script(src="http://code.jquery.com/jquery.min.js")
     script(src="/javascripts/chatty-client.js")
+    script(src="/javascripts/bootstrap.min.js")
+    link(rel="stylesheet",href="/stylesheets/bootstrap.min.css")
+    link(rel="stylesheet",href="/stylesheets/bootstrap-responsive.min.css")
     :coffeescript
       $ ()->
         Chatty.bind("#inputbox","#chatbox","#message","#users")
@@ -16,4 +19,4 @@ html
 
     title Chatty - chat room example
 
-  #container!= body
+  .container!= body

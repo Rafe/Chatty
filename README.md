@@ -10,8 +10,7 @@ Implement the simple interaction of messaging service
 
     var chatty = require("chatty");  
 
-    chatty.listen(3000);
-
+    chatty();
 
 * Client:
 

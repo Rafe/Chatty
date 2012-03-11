@@ -29,7 +29,7 @@ class FakeStore
   exec:()->
     this
 
-events = require("../lib/chatty").events
+events = require "../lib/events"
 
 users = {}
 
