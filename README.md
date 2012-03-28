@@ -9,22 +9,22 @@ Use Redis to store message
 
 * Server:
 
-      var chatty = require("chatty");  
-      var socketio = require("socket.io");
+        var chatty = require("chatty");  
+        var socketio = require("socket.io");
 
-      io = socketio.listen("80");
-      chatty(io);
+        io = socketio.listen("80");
+        chatty(io);
 
 * Client:
 
-      <script src="/socket.io/socket.io.js"></script>
-      <script src="http://code.jquery.com/jquery.min.js"></script>
-      <script src="/javascripts/chatty-client.js">
-        $(function(){
-          chatty.bind("#chatbox");
-          chatty.join("User Name","Room Name");
-        });
-      </script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="http://code.jquery.com/jquery.min.js"></script>
+        <script src="/javascripts/chatty-client.js">
+          $(function(){
+            chatty.bind("#chatbox");
+            chatty.join("User Name","Room Name");
+          });
+        </script>
 
 
 ##Dependencies
