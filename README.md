@@ -1,7 +1,7 @@
 #Chatty 
 
-Chatty is a chat module under socket.io 
-Implement the simple interaction of message service
+Chatty is a chat module under socket.io  
+Implement the simple interaction of message service  
 Use Redis to store message
 
 
@@ -12,8 +12,8 @@ Use Redis to store message
     var chatty = require("chatty");  
     var socketio = require("socket.io");
 
-    io = socketio.listen("80")
-    chatty(io)
+    io = socketio.listen("80");
+    chatty(io);
 
 * Client:
 
